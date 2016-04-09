@@ -1,0 +1,15 @@
+{
+  "name": "pokedex",
+  "version": "1.0.0",
+  "description": "UI for pokeapi.co",
+  "main": "index.html",
+  "scripts": {
+    "start": "serve -p 3080",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Stanislav Termosa <termosa.stanislav@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "serve": "^1.4.0"
+  }
+}
