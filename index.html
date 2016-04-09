@@ -13,11 +13,71 @@
   <h1>Pokedex</h1>
 </header>
 
+<div id="pokemon-preview" class="pokemon pokemon-card hidden">
+  <h2 class="hidden">Choose Pokemon</h2>
+  <figure>
+    <div class="pokemon-picture">
+      <img src="http://pokeapi.co/media/img/1.png" alt="{name}">
+    </div>
+    <figcaption>
+      <h3>{name} #{id}</h3>
+      <ul class="types"><li>Normal</li></ul>
+    </figcaption>
+    <table>
+      <tr><th>Attack</th>
+        <td>{attack}</td></tr>
+      <tr><th>Defense</th>
+        <td>{defense}</td></tr>
+      <tr><th>HP</th>
+        <td>{hp}</td></tr>
+      <tr><th>SP Attack</th>
+        <td>{sp_atk}</td></tr>
+      <tr><th>SP Defense</th>
+        <td>{sp_def}</td></tr>
+      <tr><th>Speed</th>
+        <td>{speed}</td></tr>
+      <tr><th>Weight</th>
+        <td>{weight}</td></tr>
+      <tr><th>Total moves</th>
+        <td>{total}</td></tr>
+    </table>
+  </figure>
+</div>
 <div id="pokemons-list" class="pokemons"></div>
 
 <button type="button" id="action-load-more" class="btn-load-more">Load More</button>
 
 </div>
+
+<script id="pokemon-preview" type="text/template">
+  <figure>
+    <div class="pokemon-picture">
+      <img src="http://pokeapi.co/media/img/{id}.png" alt="{name}">
+    </div>
+    <figcaption>
+      <h3>{name} #{id}</h3>
+      <ul class="types">{types}</ul>
+    </figcaption>
+    <table>
+      <tr><th>Attack</th>
+        <td>{attack}</td></tr>
+      <tr><th>Defense</th>
+        <td>{defense}</td></tr>
+      <tr><th>HP</th>
+        <td>{hp}</td></tr>
+      <tr><th>SP Attack</th>
+        <td>{sp_atk}</td></tr>
+      <tr><th>SP Defense</th>
+        <td>{sp_def}</td></tr>
+      <tr><th>Speed</th>
+        <td>{speed}</td></tr>
+      <tr><th>Weight</th>
+        <td>{weight}</td></tr>
+      <tr><th>Total moves</th>
+        <td>{total}</td></tr>
+    </table>
+  </figure>
+</script>
 
 <script id="pokemon-card" type="text/template">
   <figure class="pokemon-card" tabindex="0">

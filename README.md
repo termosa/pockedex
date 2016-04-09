@@ -5,7 +5,7 @@
 * Load first items [done]
 * Cache data [done]
 * Add "Load More" button [done]
-* Create markup for item preview
+* Create markup for item preview [done]
 * Load details and open preview
 * Add filter
 * Make the markup adaptive

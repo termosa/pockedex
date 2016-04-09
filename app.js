@@ -69,6 +69,7 @@
         .then(function(resp) {
           next = resp.meta.next;
           return resp.objects.map(function(item) {
+            cache(item.resource_uri, item);
             return {
               id: item.pkdx_id,
               name: item.name,
@@ -83,11 +84,13 @@
 
   var showMoreItems = (function() {
     var listContainer = document.getElementById('pokemons-list');
+    var preview = document.getElementById('pokemon-preview');
     return function() {
       return loadMoreItems()
         .then(renderItems)
         .then(function(html) {
           appendTo(listContainer, html);
+          preview.classList.remove('hidden');
         });
     };
   })();
