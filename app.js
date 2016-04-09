@@ -92,8 +92,6 @@
     };
   })();
 
-  showMoreItems();
-
   (function initPagination() {
     var btn = document.getElementById('action-load-more');
     var text = btn.innerText;
@@ -109,6 +107,8 @@
           btn.remove();
         });
     });
+
+    btn.click();
   })();
 
   function renderItems(items) {
