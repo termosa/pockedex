@@ -81,6 +81,17 @@
     };
   })();
 
+  var showMoreItems = (function() {
+    var listContainer = document.getElementById('pokemons-list');
+    return function() {
+      return loadMoreItems()
+        .then(renderItems)
+        .then(function(html) {
+          appendTo(listContainer, html);
+        });
+    };
+  })();
+
   showMoreItems();
 
   (function initPagination() {
@@ -99,20 +110,6 @@
         });
     });
   })();
-
-  function showMoreItems() {
-    return loadMoreItems()
-      .then(renderItems)
-      .then(function(html) {
-        var fragment = document.createDocumentFragment();
-        var holder = document.createElement('div');
-        holder.innerHTML = html;
-        while (holder.children.length) {
-          fragment.appendChild(holder.children[0]);
-        }
-        document.getElementById('pokemons-list').appendChild(fragment);
-      });
-  }
 
   function renderItems(items) {
     return items.map(function(item) {
@@ -145,6 +142,16 @@
       .reduce(function(last, next){
         return last += '&' + next
       });
+  }
+
+  function appendTo(element, html) {
+    var fragment = document.createDocumentFragment();
+    var holder = document.createElement('div');
+    holder.innerHTML = html;
+    while (holder.children.length) {
+      fragment.appendChild(holder.children[0]);
+    }
+    element.appendChild(fragment);
   }
 
   window.request = request;
