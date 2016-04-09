@@ -4,6 +4,29 @@
 })(function() {
   'use strict';
 
+  var types = {
+    "1": { label: "Normal", slug: "normal" },
+    "2": { label: "Fighting", slug: "fighting" },
+    "3": { label: "Flying", slug: "flying" },
+    "4": { label: "Poison", slug: "poison" },
+    "5": { label: "Ground", slug: "ground" },
+    "6": { label: "Rock", slug: "rock" },
+    "7": { label: "Bug", slug: "bug" },
+    "8": { label: "Ghost", slug: "ghost" },
+    "9": { label: "Steel", slug: "steel" },
+    "10": { label: "Fire", slug: "fire" },
+    "11": { label: "Water", slug: "water" },
+    "12": { label: "Grass", slug: "grass" },
+    "13": { label: "Electric", slug: "electric" },
+    "14": { label: "Psychic", slug: "psychic" },
+    "15": { label: "Ice", slug: "ice" },
+    "16": { label: "Dragon", slug: "dragon" },
+    "17": { label: "Dark", slug: "dark" },
+    "18": { label: "Fairy", slug: "fairy" },
+    "10001": { label: "Unknown", slug: "unknown" },
+    "10002": { label: "Shadow", slug: "shadow" }
+  };
+
   var template = (function() {
     var store = {};
     return function(name, data) {
@@ -37,19 +60,17 @@
   })();
 
   loadItems()
-    .then(function(resp) { return resp.objects; })
     .then(showItems);
 
   function showItems(items) {
     var html = items.map(function(item) {
-      var types = item.egg_groups.map(function(group) { return group.name; });
-      var type = function(type) {
-        return template('pokemon-type', { type: type });
+      var type = function(id) {
+        return template('pokemon-type', types[id]);
       };
       return template('pokemon-card', {
+        id: item.id,
         name: item.name,
-        picture: 'http://pokeapi.co/media/img/'+item.pkdx_id+'.png',
-        types: types.map(type).join('')
+        types: item.types.map(type).join('')
       });
     }).join('');
     document.getElementById('pokemons-list').innerHTML = html;
@@ -57,7 +78,18 @@
 
   function loadItems() {
     var uri = '/pokemon/';
-    return request(uri, { limit: 12 });
+    return request(uri, { limit: 12 })
+      .then(function(resp) {
+        return resp.objects.map(function(item) {
+          return {
+            id: item.pkdx_id,
+            name: item.name,
+            types: item.types.map(function(type) {
+              return type.resource_uri.match(/\/(\d+)\/$/)[1];
+            })
+          };
+        });
+      });
   }
 
   function request(uri, props) {
@@ -79,4 +111,7 @@
         return last += '&' + next
       });
   }
+
+  window.request = request;
+  window.cache = cache;
 });

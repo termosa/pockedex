@@ -22,7 +22,7 @@
 <script id="pokemon-card" type="text/template">
   <figure class="pokemon-card" tabindex="0">
     <div class="pokemon-picture">
-      <img src="{picture}" alt="{name}">
+      <img src="http://pokeapi.co/media/img/{id}.png" alt="{name}">
     </div>
     <figcaption>
       <h3>{name}</h3>
@@ -32,7 +32,7 @@
 </script>
 
 <script id="pokemon-type" type="text/template">
-  <li>{type}</li>
+  <li class="type-{slug}">{label}</li>
 </script>
 
 </body>
