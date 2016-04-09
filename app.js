@@ -56,16 +56,27 @@
   }
 
   function loadItems() {
-    var uri = '/pokemon/?limit=12';
-    return request(uri);
+    var uri = '/pokemon/';
+    return request(uri, { limit: 12 });
   }
 
-  function request(uri) {
+  function request(uri, props) {
     var url = 'http://pokeapi.co/api/v1';
-    var data = cache(uri);
-    if (data) return Promise.resolve(data);
+    if (props) uri += '?' + toBodyString(props);
+    var cached = cache(uri);
+    if (cached) return Promise.resolve(cached);
     fetch(url + uri)
       .then(function(resp) { return resp.json(); })
       .then(function(data) { return cache(uri, data); });
+  }
+
+  function toBodyString(data) {
+    return Object.keys(data)
+      .map(function(key) {
+        return key + '=' + data[key].toString();
+      })
+      .reduce(function(last, next){
+        return last += '&' + next
+      });
   }
 });
