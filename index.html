@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf8">
   <title>Pokedex — Cottans mission</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="style.css">
   <script src="app.js"></script>
 </head>
@@ -31,17 +32,19 @@
       <h3>{name} #{id}</h3>
       <ul class="types">{types}</ul>
     </figcaption>
-    <table>
+    <table class="pokemon-main-details">
       <tr><th>Attack</th>
         <td>{attack}</td></tr>
       <tr><th>Defense</th>
         <td>{defense}</td></tr>
-      <tr><th>HP</th>
-        <td>{hp}</td></tr>
       <tr><th>SP Attack</th>
         <td>{sp_atk}</td></tr>
       <tr><th>SP Defense</th>
         <td>{sp_def}</td></tr>
+    </table>
+    <table class="pokemon-additional-details">
+      <tr><th>HP</th>
+        <td>{hp}</td></tr>
       <tr><th>Speed</th>
         <td>{speed}</td></tr>
       <tr><th>Weight</th>
