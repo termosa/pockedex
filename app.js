@@ -35,7 +35,7 @@
     };
 
     function loadTemplate(name) {
-      var html = document.getElementById(name).innerText;
+      var html = document.getElementById('tmpl-' + name).innerText;
       var props = (html.match(/{[^}]+}/g) || []).map(function(prop) {
         return prop.slice(1, -1);
       });
@@ -93,6 +93,55 @@
           preview.classList.remove('hidden');
         });
     };
+  })();
+
+  var openPreview = (function() {
+    var preview = document.getElementById('pokemon-preview');
+    var type = function(id) {
+      return template('pokemon-type', types[id]);
+    };
+
+    return function(id) {
+      request('/api/v1/pokemon/' + id + '/')
+        .then(function(item) {
+          item.id = item.pkdx_id;
+          item.total_moves = item.moves.length;
+          item.types = item.types
+            .map(function(type) {
+              return type.resource_uri.match(/\/(\d+)\/$/)[1];
+            })
+            .map(type).join('');
+          return item;
+        })
+        .then(function(pokemon) {
+          preview.innerHTML = template('pokemon-preview', pokemon);
+        });
+    };
+  })();
+
+  (function initPreview() {
+    var list = document.getElementById('pokemons-list');
+    list.addEventListener('click', onSwitch);
+    list.addEventListener('keydown', function(e) {
+      if (e.keyCode === 32 || e.keyCode === 13) {
+        if (onSwitch(e)) e.preventDefault();
+      }
+    });
+
+    function onSwitch(e) {
+      var el = e.target;
+      while (el !== list) {
+        if (el.nodeName === 'FIGURE') {
+          toArray(list.getElementsByClassName('active'))
+            .forEach(function(el) { el.classList.remove('active'); });
+          el.classList.add('active');
+          openPreview(el.dataset.id);
+          return true;
+        }
+        el = el.parentElement;
+      }
+      return false;
+    }
   })();
 
   (function initPagination() {
@@ -157,6 +206,11 @@
     element.appendChild(fragment);
   }
 
+  function toArray(collection) {
+    return Array.prototype.slice.call(collection);
+  }
+
+  window.openPreview = openPreview;
   window.request = request;
   window.cache = cache;
 });

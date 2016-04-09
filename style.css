@@ -40,7 +40,14 @@ header { padding: 0 40px; }
 .pokemon-card:focus {
   outline: none;
   background: #fafafa;
+  box-shadow: 2px 2px 18px -4px #333333;
+}
+.pokemon-card.active {
+  background: #fafafa;
   box-shadow: 0px 0px 1px 0px #ccc;
+}
+.pokemon-card.active:focus {
+  box-shadow: 0px 0px 1px 1px #ccc;
 }
 
 .pokemons .pokemon-picture img {
