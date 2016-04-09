@@ -59,11 +59,63 @@
     };
   })();
 
-  loadItems()
-    .then(showItems);
+  var loadMoreItems = (function() {
+    var next = '/api/v1/pokemon/?limit=12';
 
-  function showItems(items) {
-    var html = items.map(function(item) {
+    return function() {
+      if (!next) return Promise.reject();
+
+      return request(next)
+        .then(function(resp) {
+          next = resp.meta.next;
+          return resp.objects.map(function(item) {
+            return {
+              id: item.pkdx_id,
+              name: item.name,
+              types: item.types.map(function(type) {
+                return type.resource_uri.match(/\/(\d+)\/$/)[1];
+              })
+            };
+          });
+        });
+    };
+  })();
+
+  showMoreItems();
+
+  (function initPagination() {
+    var btn = document.getElementById('action-load-more');
+    var text = btn.innerText;
+    btn.addEventListener('click', function(e) {
+      btn.disabled = true;
+      btn.innerText = 'Loading…';
+      showMoreItems()
+        .then(function() {
+          btn.disabled = false;
+          btn.innerText = text;
+        })
+        .catch(function() {
+          btn.remove();
+        });
+    });
+  })();
+
+  function showMoreItems() {
+    return loadMoreItems()
+      .then(renderItems)
+      .then(function(html) {
+        var fragment = document.createDocumentFragment();
+        var holder = document.createElement('div');
+        holder.innerHTML = html;
+        while (holder.children.length) {
+          fragment.appendChild(holder.children[0]);
+        }
+        document.getElementById('pokemons-list').appendChild(fragment);
+      });
+  }
+
+  function renderItems(items) {
+    return items.map(function(item) {
       var type = function(id) {
         return template('pokemon-type', types[id]);
       };
@@ -73,31 +125,14 @@
         types: item.types.map(type).join('')
       });
     }).join('');
-    document.getElementById('pokemons-list').innerHTML = html;
-  }
-
-  function loadItems() {
-    var uri = '/pokemon/';
-    return request(uri, { limit: 12 })
-      .then(function(resp) {
-        return resp.objects.map(function(item) {
-          return {
-            id: item.pkdx_id,
-            name: item.name,
-            types: item.types.map(function(type) {
-              return type.resource_uri.match(/\/(\d+)\/$/)[1];
-            })
-          };
-        });
-      });
   }
 
   function request(uri, props) {
-    var url = 'http://pokeapi.co/api/v1';
+    var host = 'http://pokeapi.co';
     if (props) uri += '?' + toBodyString(props);
     var cached = cache(uri);
     if (cached) return Promise.resolve(cached);
-    fetch(url + uri)
+    return fetch(host + uri)
       .then(function(resp) { return resp.json(); })
       .then(function(data) { return cache(uri, data); });
   }

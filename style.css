@@ -88,6 +88,29 @@ header { padding: 0 40px; }
 .types .type-unknown { background: #fff; }
 .types .type-shadow { background: #ece0e0; }
 
+.btn-load-more {
+  margin: 30px auto 0;
+  display: block;
+  width: 400px;
+  font-size: 20px;
+  background: #fff;
+  border: none;
+  cursor: pointer;
+  padding: 16px 0;
+  box-shadow: 4px 4px 36px -7px #666;
+  transition: box-shadow .2s, background .2s;
+}
+.btn-load-more:focus {
+  outline: none;
+  background: #fafafa;
+  box-shadow: 2px 2px 18px -4px #333333;
+}
+.btn-load-more:active,
+.btn-load-more[disabled] {
+  background: #fafafa;
+  box-shadow: 0px 0px 1px 0px #ccc;
+}
+
 /* Remove spaces */
 .types { font-size: 0; }
 .types li { font-size: 13px; }
