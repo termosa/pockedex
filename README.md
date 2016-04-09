@@ -1,7 +1,7 @@
 # Plan
 
-* Set environment
-* Create markup of items list
+* Set environment [done]
+* Create markup of items list [done]
 * Load first items
 * Cache data
 * Add "Load More" button
