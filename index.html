@@ -4,6 +4,7 @@
   <meta charset="utf8">
   <title>Pokedex — Cottans mission</title>
   <link rel="stylesheet" href="style.css">
+  <script src="app.js"></script>
 </head>
 <body>
 <div class="page-wrapper">
@@ -12,99 +13,27 @@
   <h1>Pokedex</h1>
 </header>
 
-<div class="pokemons">
-  <figure class="pokemon-card" tabindex="0">
-    <img src="pokemon.png" alt="Bulbazar">
-    <figcaption>
-      <h3>Bulbazar</h3>
-      <ul class="types">
-        <li>Grass</li>
-        <li>Poison</li>
-      </ul>
-    </figcaption>
-  </figure>
-  <figure class="pokemon-card" tabindex="0">
-    <img src="pokemon.png" alt="Bulbazar">
-    <figcaption>
-      <h3>Bulbazar</h3>
-      <ul class="types">
-        <li>Grass</li>
-        <li>Poison</li>
-      </ul>
-    </figcaption>
-  </figure>
-  <figure class="pokemon-card" tabindex="0">
-    <img src="pokemon.png" alt="Bulbazar">
-    <figcaption>
-      <h3>Bulbazar</h3>
-      <ul class="types">
-        <li>Grass</li>
-        <li>Poison</li>
-      </ul>
-    </figcaption>
-  </figure>
-  <figure class="pokemon-card" tabindex="0">
-    <img src="pokemon.png" alt="Bulbazar">
-    <figcaption>
-      <h3>Bulbazar</h3>
-      <ul class="types">
-        <li>Grass</li>
-        <li>Poison</li>
-      </ul>
-    </figcaption>
-  </figure>
-  <figure class="pokemon-card" tabindex="0">
-    <img src="pokemon.png" alt="Bulbazar">
-    <figcaption>
-      <h3>Bulbazar</h3>
-      <ul class="types">
-        <li>Grass</li>
-        <li>Poison</li>
-      </ul>
-    </figcaption>
-  </figure>
-  <figure class="pokemon-card" tabindex="0">
-    <img src="pokemon.png" alt="Bulbazar">
-    <figcaption>
-      <h3>Bulbazar</h3>
-      <ul class="types">
-        <li>Grass</li>
-        <li>Poison</li>
-      </ul>
-    </figcaption>
-  </figure>
-  <figure class="pokemon-card" tabindex="0">
-    <img src="pokemon.png" alt="Bulbazar">
-    <figcaption>
-      <h3>Bulbazar</h3>
-      <ul class="types">
-        <li>Grass</li>
-        <li>Poison</li>
-      </ul>
-    </figcaption>
-  </figure>
-  <figure class="pokemon-card" tabindex="0">
-    <img src="pokemon.png" alt="Bulbazar">
-    <figcaption>
-      <h3>Bulbazar</h3>
-      <ul class="types">
-        <li>Grass</li>
-        <li>Poison</li>
-      </ul>
-    </figcaption>
-  </figure>
-  <figure class="pokemon-card" tabindex="0">
-    <img src="pokemon.png" alt="Bulbazar">
-    <figcaption>
-      <h3>Bulbazar</h3>
-      <ul class="types">
-        <li>Grass</li>
-        <li>Poison</li>
-      </ul>
-    </figcaption>
-  </figure>
+<div id="pokemons-list" class="pokemons">
+  <h2 class="loading">Loading…</h2>
 </div>
 
 </div>
+
+<script id="pokemon-card" type="text/template">
+  <figure class="pokemon-card" tabindex="0">
+    <div class="pokemon-picture">
+      <img src="{picture}" alt="{name}">
+    </div>
+    <figcaption>
+      <h3>{name}</h3>
+      <ul class="types">{types}</ul>
+    </figcaption>
+  </figure>
+</script>
+
+<script id="pokemon-type" type="text/template">
+  <li>{type}</li>
+</script>
+
 </body>
 </html>
