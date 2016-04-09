@@ -2,7 +2,7 @@
 
 * Set environment [done]
 * Create markup of items list [done]
-* Load first items
+* Load first items [done]
 * Cache data
 * Add "Load More" button
 * Create markup for item preview

@@ -37,19 +37,18 @@
   })();
 
   loadItems()
-    .then(function(resp) { return resp.results; })
+    .then(function(resp) { return resp.objects; })
     .then(showItems);
 
   function showItems(items) {
     var html = items.map(function(item) {
-      var id = item.url.match(/\/(\d+)\/$/)[1];
-      var types = ['Ground', 'Poison'];
+      var types = item.egg_groups.map(function(group) { return group.name; });
       var type = function(type) {
         return template('pokemon-type', { type: type });
       };
       return template('pokemon-card', {
         name: item.name,
-        picture: 'http://pokeapi.co/media/img/'+id+'.png',
+        picture: 'http://pokeapi.co/media/img/'+item.pkdx_id+'.png',
         types: types.map(type).join('')
       });
     }).join('');
@@ -57,10 +56,15 @@
   }
 
   function loadItems() {
-    var uri = 'http://pokeapi.co/api/v2/pokemon/?limit=12';
+    var uri = '/pokemon/?limit=12';
+    return request(uri);
+  }
+
+  function request(uri) {
+    var url = 'http://pokeapi.co/api/v1';
     var data = cache(uri);
     if (data) return Promise.resolve(data);
-    return fetch(uri)
+    fetch(url + uri)
       .then(function(resp) { return resp.json(); })
       .then(function(data) { return cache(uri, data); });
   }
